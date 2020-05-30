@@ -22,9 +22,14 @@ export default class Recipe {
     }
 
     calcTime() {
+        // const numIng = this.ingredients.length;
+        // const periods = Math.ceil(numIng / 3);
+        // // const time = periods * 15;
+        // this.time = 45;
+
         const numIng = this.ingredients.length;
         const periods = Math.ceil(numIng / 3);
-        const time = periods * 15;
+        this.time = periods * 15;
     }
 
     calServings() {
@@ -48,7 +53,7 @@ export default class Recipe {
             ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
 
             //parse ingredients into count,unit and ingredients
-            console.log(ingredient);
+            // console.log(ingredient);
 
             const arrIng = ingredient.split(' ');
             const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
@@ -93,6 +98,18 @@ export default class Recipe {
         });
         this.ingredients = newIngredients;
 
+    }
+
+    updateServings (type) {
+        // Servings
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+        // Ingredients
+        this.ingredients.forEach(ing => {
+            ing.count *= (newServings / this.servings);
+        });
+
+        this.servings = newServings;
     }
     
 }
