@@ -3,6 +3,7 @@ import Recipe from './models/Recipe';
 import List from './models/List';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 const state = {};
@@ -110,13 +111,21 @@ const controlRecipe = async() => {
 ['hashchange','load'].forEach(event => window.addEventListener(event,controlRecipe));
 
 
+const controlList = () => {
+    if(!state.list) state.list = new List();
+
+    state.recipe.ingredients.forEach(el => {
+       const item = state.list.addItem(el.count , el.unit , el.ingredient);
+       listView.renderItem(item);
+    })
+}
+
+
+
 //handling recipe button click
 elements.recipe.addEventListener('click', e => {
     if (e.target.matches('.btn-decrease, .btn-decrease *')) {
-
         console.log('inside matches');
-       
-
         if(state.recipe.servings > 1) {
             state.recipe.updateServings('dec');
             recipeView.updateServingsIngredients(state.recipe);
@@ -127,7 +136,9 @@ elements.recipe.addEventListener('click', e => {
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
     }
-    // console.log(state.recipe);
+    else if(e.target.matches('.recipe__btn--add, .recipe__btn--add *')){
+        controlList();
+    }
 });
 
 
