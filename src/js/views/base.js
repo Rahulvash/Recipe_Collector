@@ -5,7 +5,9 @@ export const elements = {
     searchResList : document.querySelector('.results__list'),
     searchResPages : document.querySelector('.results__pages'),
     recipe: document.querySelector('.recipe'),
-    shopping: document.querySelector('.shopping__list')
+    shopping: document.querySelector('.shopping__list'),
+    likesMenu: document.querySelector('.likes__field'),
+    likesList: document.querySelector('.likes__list')
 }
 
 
@@ -24,7 +26,7 @@ export const renderLoader = (parent) => {
 };
 
 export const clearLoader = () => {
-    console.log('inside clear loader');
+    // console.log('inside clear loader');
     const loader = document.querySelector('.loader');
     if (loader) {
         loader.parentNode.removeChild(loader);
